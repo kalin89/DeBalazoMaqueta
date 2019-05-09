@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" type="image/ico" href="/public/img/De-Balazo-Llanta-Gimp.ico" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../../css/style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Usuario</a>
+            <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button> -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" id="menu" href="#">Menu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="salir">Salír</a>
+                    </li>
+                    <li class="nav-item">
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <br>
+    <div class="container-fluid" style="margin-top:-10px;">
+        <div class="container">
+
+            <div class="text-center">
+                <h2>
+                    Aquí nombre del comercio
+                </h2>
+                <p></p>
+            </div>
+
+
+            <form class="form-horizontal" method="post" action="/menu/lista">
+                <div class="form-group ">
+
+                    <div class="table-responsive">
+                        <table class="table table-hover" style="100%">
+                            <thead class="thead-light text-center">
+                                <tr>
+                                    <th>Foto/Imagen</th>
+                                    <th width="20%">Platillo/Bebida</th>
+                                    <th width="35%">Descripción</th>
+                                    <th colspan="4" width="20%">Precio</th>
+                                    <th width="5%"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="productos"></tbody>
+                        </table>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                        </div>
+
+                        <div class="col-md-3">
+                            <a href="./AltaMenu.html" class="btn btn-outline-dark btn-lg btn-block">
+                                <span class="fa fa-plus">
+                                    Agregar nuevo
+                                </span>
+                            </a>
+                        </div>
+
+                        <div class="col-md-4">
+                        </div>
+                    </div>
+
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase-firestore.js"></script>
+    <script src="../../js/listaMenu.js"></script>
+
+</body>
+
+</html>
+
+
