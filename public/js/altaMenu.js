@@ -16,7 +16,6 @@ $(document).ready(function () {
 
     fileButton.addEventListener('change', function(e){
         file = e.target.files[0];
-        console.log(file);
     })
   
 
@@ -25,13 +24,75 @@ $(document).ready(function () {
         if (user) {
           // User is signed in.
           id = user.uid;
-          var displayName = user.displayName;
-          var email = user.email;
-          console.log('logueado');
+          var dato = window.location.search.substring(1);
+          if(dato.length > 0){
+            var sParametro = dato.split('=');
+            console.log(sParametro[0]);
+            cargarDatos(sParametro);
+          }
         } else {
             window.location = '../users/sigin.html';
         }
       });
+
+
+    function cargarDatos(idProducto) {
+      let idProduct = String(idProducto);
+      var docRef = db.collection("productos").doc(idProduct);
+
+      docRef.get().then(function (doc) {
+        if (doc.exists) {
+          let precio = doc.data().precio;
+          $('#Titulo').val(doc.data().titulo);
+          if(precio != ''){
+            console.log(doc.data().titulo)
+            $('#Precio').val(doc.data().precio);
+            
+          }
+          else
+          {
+            
+            $("#DifPorc").prop({
+              checked: true
+            });
+           
+            let Chico = doc.data().chico;
+            let Mediano = doc.data().mediano;
+            let Grande = doc.data().grande;
+
+            if(Chico != ''){
+              $("#chkCh").prop({checked: true});
+              $("#txtCh").prop({disabled: false});
+            }
+
+            if(Mediano != ''){
+              $("#chkMed").prop({checked: true});
+              $("#txtMed").prop({disabled: false});
+            }
+
+            if(Grande != ''){
+              $("#chkGde").prop({checked: true});
+              $("#txtGde").prop({disabled: false});
+            }
+
+
+             EnableDiv();
+            $('#txtCh').val(doc.data().chico);
+            $('#txtMed').val(doc.data().mediano);
+            $('#txtGde').val(doc.data().grande);
+          }
+          
+          $('#Descripcion').val(doc.data().descripcion);
+          $('#profile-img-tag').attr('src', doc.data().url)
+
+        } else {
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
+        }
+      }).catch(function (error) {
+        console.log("Error getting document:", error);
+      });
+    }
 
 
       $('#btnAgregar').click(function(){

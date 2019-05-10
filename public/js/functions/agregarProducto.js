@@ -1,16 +1,7 @@
 $(document).ready(function () {
-
   $("#DivRow").hide();
 
   $('[data-toggle="tooltip"]').tooltip();
-
-  $('.iEditar').click(function () {
-    alert("En un futuro, E D I T A R É!");
-  });
-
-  $('.iEliminar').click(function () {
-    alert("En un futuro, E L I M I N A R É!");
-  });
 
   // ****** CAMBIAR IMAGEN DEBALAZO POR PLATILLO/BEBIDA ******
   function readURL(input) {
