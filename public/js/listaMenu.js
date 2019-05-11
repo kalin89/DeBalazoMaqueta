@@ -1,16 +1,4 @@
 $(document).ready(function () {
-  var idproducto;
-
-    $('#productos').on('click', '.iEditar', function() {
-      idproducto = '?' + $(this).val();
-      console.log($(this).val());
-      let url = './AltaMenu.html' + idproducto;
-      window.location = url;
-    });
-
-    // $('.iEliminar').click(function () {
-    //   alert("En un futuro, E L I M I N A R É!");
-    // });
 
   var config = {
     apiKey: "AIzaSyBptaEvoSSM9AlVCN0CYSD4j1ZaVMHqgw4",
@@ -23,10 +11,46 @@ $(document).ready(function () {
   firebase.initializeApp(config);
   firebase.auth().languageCode = 'es';
   var db = firebase.firestore();
-  var id;
+  var id, idproducto;
 
-  function dibujarMenu(titulo, descripcion, precio, chico, mediano, grande, url,id) {
-    console.log(id);
+  $('#productos').on('click', '.iEditar', function() {
+    idproducto = '?' + $(this).val();
+    let url = './AltaMenu.html' + idproducto;
+    window.location = url;
+  });
+
+  $('#productos').on('click', '.iEliminar', function() {
+    swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this imaginary file!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        let productoId = $(this).val();
+        let nombreImagen = String($(this).data('image'));
+
+        let storageRef = firebase.storage().ref('platillos/' + nombreImagen);
+        storageRef.delete().then(function() {
+          eliminarProducto(productoId);
+        }).catch(function(error) {
+          let alerta = `
+              <div class="alert alert-danger" role="alert">
+                  Error al Guardar imagen verifique que su imagen sea correcta
+              </div>
+              `;
+            $('#alertas').append(alerta);
+        });
+          swal("Poof! Your imaginary file has been deleted!", {
+          icon: "success",
+        });
+      }
+    });
+  });
+
+  function dibujarMenu(titulo, descripcion, precio, chico, mediano, grande, url,id, imagen) {
     precio = precio == '' ? '-' : precio;
     chico = chico == '' ? '-' : 'C ' + chico;
     mediano = mediano == '' ? '-' : 'M ' + mediano;
@@ -49,7 +73,7 @@ $(document).ready(function () {
             <td class="text-center">
                 <button type="button" class="fa fa-pencil iEditar btn btn-link" style="color:darkorange; text-decoration:none;" value="${id}" data-toggle="tooltip"
                     data-placement="left" title="Editar"></button>
-                <button type="button" class="fa fa-times iEliminar btn btn-link" value="${id}" style="color:red; text-decoration:none;" data-toggle="tooltip"
+                <button type="button" id="${imagen}" data-image="${imagen}" class="fa fa-times iEliminar btn btn-link" value="${id}" style="color:red; text-decoration:none;" data-toggle="tooltip"
                     data-placement="left" title="Eliminar"></button>
             </td>
             </tr>
@@ -62,27 +86,12 @@ $(document).ready(function () {
     if (user) {
       // User is signed in.
       id = user.uid;
-      var displayName = user.displayName;
-      var email = user.email;
-      let menu = '';
-      db.collection("productos").where("UserId", "==", id)
-        .get()
-        .then(function (querySnapshot) {
-          querySnapshot.forEach(function (doc) {
-            menu += dibujarMenu(doc.data().titulo, doc.data().descripcion, doc.data().precio, doc.data().chico, doc.data().mediano, doc.data().grande, doc.data().url, doc.id);
-            
-          });
-          $("#productos").html(menu);
-          $('[data-toggle="tooltip"]').tooltip();
-        })
-        .catch(function (error) {
-          console.log("Error getting documents: ", error);
-        });
+      Cargar(id);
 
     } else {
       window.location = '../users/sigin.html';
     }
-
+    $('#spiner').hide();
   });
 
   $('#salir').click(function () {
@@ -92,7 +101,37 @@ $(document).ready(function () {
       console.log(error)
     });
   });
-});
+
+  function eliminarProducto(id) {
+    let productoID = String(id);
+    db.collection("productos").doc(productoID).delete().then(function () {
+      console.log("Document successfully deleted!");
+    }).catch(function (error) {
+      console.error("Error removing document: ", error);
+    });
+  }
+
+  function Cargar(id) {
+    let menu = '';
+    db.collection("productos").where("UserId", "==", id).get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          menu += dibujarMenu(doc.data().titulo, doc.data().descripcion, doc.data().precio, doc.data().chico, doc.data().mediano, doc.data().grande, doc.data().url, doc.id, doc.data().imagen);
+
+        });
+        $("#productos").html(menu);
+        $('[data-toggle="tooltip"]').tooltip();
+      })
+      .catch(function (error) {
+        console.log("Error getting documents: ", error);
+      });
+  }
+
+
+  });
+
+
+  
 
 
 

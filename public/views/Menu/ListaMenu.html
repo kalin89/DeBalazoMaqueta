@@ -13,6 +13,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../../css/style.css">
     <script src="../../js/functions/agregarProducto.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <title>Document</title>
 </head>
 
@@ -41,7 +42,7 @@
     <br>
     <div class="container-fluid" style="margin-top:-10px;">
         <div class="container">
-
+            <div id="alertas"></div>
             <div class="text-center">
                 <h2>
                     Aquí nombre del comercio
@@ -89,6 +90,11 @@
             </form>
         </div>
     </div>
+
+    <div id="spiner" class="spinner-border text-primary mx-auto" role="status" >
+        <span class="sr-only">Loading...</span>
+    </div>
+
     <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase-firestore.js"></script>
     <script src="../../js/listaMenu.js"></script>

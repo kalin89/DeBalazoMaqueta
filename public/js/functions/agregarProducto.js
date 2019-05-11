@@ -115,6 +115,8 @@ function EnableDisableChico(chkCh) {
   txtCh.disabled = chkCh.checked ? false : true;
   if (!txtCh.disabled) {
     txtCh.focus();
+  }else {
+    txtCh.value = '';
   }
 };
 
@@ -124,6 +126,9 @@ function EnableDisableMediano(chkMed) {
   if (!txtMed.disabled) {
     txtMed.focus();
   }
+  else {
+    txtMed.value = '';
+  }
 };
 
 function EnableDisableGrande(chkGde) {
@@ -131,6 +136,9 @@ function EnableDisableGrande(chkGde) {
   txtGde.disabled = chkGde.checked ? false : true;
   if (!txtGde.disabled) {
     txtGde.focus();
+  }
+  else {
+    txtGde.value = '';
   }
 };
 // ****** DES/HABILITAR txt's PRECIO PORCIONES ******
